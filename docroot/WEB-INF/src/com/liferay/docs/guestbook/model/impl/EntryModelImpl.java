@@ -90,7 +90,12 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.docs.guestbook.model.Entry"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.docs.guestbook.model.Entry"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long GUESTBOOKID_COLUMN_BITMASK = 2L;
+	public static long ENTRYID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -283,7 +288,19 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -412,7 +429,23 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public void setGuestbookId(long guestbookId) {
+		_columnBitmask |= GUESTBOOKID_COLUMN_BITMASK;
+
+		if (!_setOriginalGuestbookId) {
+			_setOriginalGuestbookId = true;
+
+			_originalGuestbookId = _guestbookId;
+		}
+
 		_guestbookId = guestbookId;
+	}
+
+	public long getOriginalGuestbookId() {
+		return _originalGuestbookId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -503,6 +536,17 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@Override
 	public void resetOriginalValues() {
+		EntryModelImpl entryModelImpl = this;
+
+		entryModelImpl._originalGroupId = entryModelImpl._groupId;
+
+		entryModelImpl._setOriginalGroupId = false;
+
+		entryModelImpl._originalGuestbookId = entryModelImpl._guestbookId;
+
+		entryModelImpl._setOriginalGuestbookId = false;
+
+		entryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -665,6 +709,8 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	private static Class<?>[] _escapedModelInterfaces = new Class[] { Entry.class };
 	private long _entryId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
@@ -675,5 +721,8 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	private String _email;
 	private String _message;
 	private long _guestbookId;
+	private long _originalGuestbookId;
+	private boolean _setOriginalGuestbookId;
+	private long _columnBitmask;
 	private Entry _escapedModel;
 }

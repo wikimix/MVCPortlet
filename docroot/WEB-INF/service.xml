@@ -26,11 +26,7 @@
 		
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId"></finder-column>
-		</finder>
-		<finder name="G_G" return-type="Collection">
-			<finder-column name="groupId"></finder-column>
-			<finder-column name="guestbookId"></finder-column>
-		</finder>		
+		</finder>	
 	</entity>
 	<entity name="Entry" local-service="true">
 
@@ -54,7 +50,12 @@
 		<column name="message" type="String"></column>
 
 		<!-- Audit fields -->
-		<column name="guestbookId" type="long"></column>
+		<column name="guestbookId" type="long"></column>		
+		
+		<finder name="G_G" return-type="Collection">
+			<finder-column name="groupId"></finder-column>
+			<finder-column name="guestbookId"></finder-column>
+		</finder>	
 	</entity>
 	<exceptions>
 		<exception>GuestbookName</exception>

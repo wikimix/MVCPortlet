@@ -359,19 +359,7 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
 
 	@Override
 	public void setGuestbookId(long guestbookId) {
-		_columnBitmask |= GUESTBOOKID_COLUMN_BITMASK;
-
-		if (!_setOriginalGuestbookId) {
-			_setOriginalGuestbookId = true;
-
-			_originalGuestbookId = _guestbookId;
-		}
-
 		_guestbookId = guestbookId;
-	}
-
-	public long getOriginalGuestbookId() {
-		return _originalGuestbookId;
 	}
 
 	public long getColumnBitmask() {
@@ -468,10 +456,6 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
 		guestbookModelImpl._originalGroupId = guestbookModelImpl._groupId;
 
 		guestbookModelImpl._setOriginalGroupId = false;
-
-		guestbookModelImpl._originalGuestbookId = guestbookModelImpl._guestbookId;
-
-		guestbookModelImpl._setOriginalGuestbookId = false;
 
 		guestbookModelImpl._columnBitmask = 0;
 	}
@@ -611,8 +595,6 @@ public class GuestbookModelImpl extends BaseModelImpl<Guestbook>
 	private Date _modifiedDate;
 	private String _name;
 	private long _guestbookId;
-	private long _originalGuestbookId;
-	private boolean _setOriginalGuestbookId;
 	private long _columnBitmask;
 	private Guestbook _escapedModel;
 }
