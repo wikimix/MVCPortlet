@@ -99,7 +99,18 @@ public class GuestbookLocalServiceImpl extends GuestbookLocalServiceBaseImpl {
 		guestbook.setExpandoBridgeAttributes(serviceContext);
 
 		guestbookPersistence.update(guestbook);
-
+		
+		/**
+		 * Notice that the resourceLocalService object is already there, ready for you to use. This is one of several utilities that are automatically injected by Service Builder.
+		 * This code adds a resource to Liferay’s database to correspond with your entity (notice that the guestbookId is included in the call). 
+		 * The three booleans at the end are settings. The first is whether to add portlet action permissions. 
+		 * This should only be true if the permission is for a portlet resource. Since this permission is for a model resource (an entity),
+		 *  it’s false. The other two are settings for adding group permissions and adding guest permissions.
+		 *  If you set these to true as has been done here, you’ll add the default permissions configured in the permissions configuration file that you created in the previous step.
+		 *  Since you definitely want to do this, these booleans are set to true.
+		 */
+		resourceLocalService.addResources(user.getCompanyId(), groupId, userId, Guestbook.class.getName(), guestbookId,
+				false, true, true);
 		return guestbook;
 	}
 }
